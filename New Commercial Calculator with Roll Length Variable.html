@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Commercial Wallcovering Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      max-width: 800px;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 1.5rem;
+      margin-right: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 1.5rem;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .note {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .print-header {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    @media print {
+      button {
+        display: none;
+      }
+
+      input, select {
+        border: none;
+        padding: 0;
+      }
+
+      body {
+        margin: 0.5in;
+        max-width: none;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Commercial Wallcovering Calculator</h1>
+
+<label for="projectName">Project Name:</label>
+<input type="text" id="projectName" placeholder="Enter project name" />
+
+<label for="roomName">Room Name:</label>
+<input type="text" id="roomName" placeholder="Enter room name" />
+
+<label for="wallWidth">Width of Wall (inches):</label>
+<input type="number" id="wallWidth" min="0" step="any" />
+
+<label for="wallHeight">Height of Wall (inches):</label>
+<input type="number" id="wallHeight" min="0" step="any" />
+
+<label for="patternRepeat">Pattern Repeat (inches):</label>
+<input type="number" id="patternRepeat" min="0" step="any" placeholder="Enter 0 if none" />
+
+<label for="numWalls">Number of Walls:</label>
+<input type="number" id="numWalls" min="1" value="1" />
+
+<label for="sheetWidth">Usable Material Width (inches):</label>
+<input type="number" id="sheetWidth" min="0" step="any" />
+
+<label for="rollLengthYards">Roll Length (yards):</label>
+<input type="number" id="rollLengthYards" min="0" step="any" value="30" />
+<div style="margin-top:0.35rem; font-size:0.9rem;">
+  Default is 30 yds. Change if vendor specifies otherwise.
+</div>
+
+<label for="extraStripPerWall">Add 1 Extra Strip Per Wall?</label>
+<select id="extraStripPerWall">
+  <option value="yes">Yes</option>
+  <option value="no">No</option>
+</select>
+
+<label for="wastePercent">Waste Allowance (%):</label>
+<input type="number" id="wastePercent" min="0" step="any" value="0" />
+
+<label for="yardageMode">Ordering Yardage Mode:</label>
+<select id="yardageMode">
+  <option value="actual">Order By Actual Yardage</option>
+  <option value="increment15">Round Up to 15-Yard Increments</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="window.print()">Print</button>
+
+<div class="print-header" id="printHeader"></div>
+<div class="result" id="result"></div>
+
+<script>
+function roundUpToRepeat(height, repeat) {
+  if (!repeat || repeat <= 0) return height;
+  return Math.ceil(height / repeat) * repeat;
+}
+
+function roundUpToIncrement(value, increment) {
+  return Math.ceil(value / increment) * increment;
+}
+
+function calculate() {
+  const projectName = document.getElementById('projectName').value.trim();
+  const roomName = document.getElementById('roomName').value.trim();
+
+  const wallWidth = parseFloat(document.getElementById('wallWidth').value);
+  const wallHeight = parseFloat(document.getElementById('wallHeight').value);
+  const patternRepeat = parseFloat(document.getElementById('patternRepeat').value) || 0;
+  const numWalls = parseInt(document.getElementById('numWalls').value) || 1;
+  const sheetWidth = parseFloat(document.getElementById('sheetWidth').value);
+  const rollLengthYards = parseFloat(document.getElementById('rollLengthYards').value);
+  const extraStripPerWall = document.getElementById('extraStripPerWall').value;
+  const wastePercent = parseFloat(document.getElementById('wastePercent').value) || 0;
+  const yardageMode = document.getElementById('yardageMode').value;
+
+  const result = document.getElementById('result');
+
+  if (
+    isNaN(wallWidth) || wallWidth <= 0 ||
+    isNaN(wallHeight) || wallHeight <= 0 ||
+    isNaN(sheetWidth) || sheetWidth <= 0 ||
+    isNaN(rollLengthYards) || rollLengthYards <= 0 ||
+    isNaN(numWalls) || numWalls < 1 ||
+    isNaN(wastePercent) || wastePercent < 0
+  ) {
+    document.getElementById('printHeader').innerHTML = "";
+    result.innerHTML = "<span class='warning'>Please enter valid positive numbers for all required fields.</span>";
+    return;
+  }
+
+  const rollLengthInches = rollLengthYards * 36;
+  const adjustedSheetHeight = roundUpToRepeat(wallHeight, patternRepeat);
+
+  if (adjustedSheetHeight > rollLengthInches) {
+    document.getElementById('printHeader').innerHTML = "";
+    result.innerHTML = "<span class='warning'>Adjusted drop height is greater than the full roll length.</span>";
+    return;
+  }
+
+  let sheetsPerWall = Math.ceil(wallWidth / sheetWidth);
+
+  if (extraStripPerWall === "yes") {
+    sheetsPerWall += 1;
+  }
+
+  const totalSheets = sheetsPerWall * numWalls;
+  const fullSheetsPerRoll = Math.floor(rollLengthInches / adjustedSheetHeight);
+
+  if (fullSheetsPerRoll < 1) {
+    document.getElementById('printHeader').innerHTML = "";
+    result.innerHTML = "<span class='warning'>Roll is too short to yield one full strip.</span>";
+    return;
+  }
+
+  const totalRequiredInches = totalSheets * adjustedSheetHeight;
+  const exactYards = totalRequiredInches / 36;
+  const yardsWithWaste = exactYards * (1 + wastePercent / 100);
+
+  const roundedActualYards = Math.ceil(yardsWithWaste);
+  const rounded15YardQty = roundUpToIncrement(yardsWithWaste, 15);
+
+  const orderYards = yardageMode === "increment15"
+    ? rounded15YardQty
+    : roundedActualYards;
+
+  const equivalentRolls = Math.ceil(orderYards / rollLengthYards);
+
+  document.getElementById('printHeader').innerHTML =
+    `<strong>Project Name:</strong> ${projectName || 'N/A'}<br>` +
+    `<strong>Room Name:</strong> ${roomName || 'N/A'}`;
+
+  result.innerHTML =
+    `Strips Per Wall: ${sheetsPerWall}<br>` +
+    `Total Strips Needed: ${totalSheets}<br>` +
+    `Adjusted Drop Height: ${adjustedSheetHeight.toFixed(2)} inches<br>` +
+    `Full-Height Strips Per Roll: ${fullSheetsPerRoll}<br>` +
+    `Exact Yardage Before Waste: ${exactYards.toFixed(2)} yds<br>` +
+    `Waste Allowance: ${wastePercent.toFixed(2)}%<br>` +
+    `Total Yardage With Waste: ${yardsWithWaste.toFixed(2)} yds<br>` +
+    `Rounded Actual Yardage: ${roundedActualYards} yds<br>` +
+    `Rounded to 15-Yard Increments: ${rounded15YardQty} yds<br><br>` +
+    `<strong>Recommended Order Quantity: ${orderYards} yds</strong><br>` +
+    `<strong>Equivalent Full Rolls (${rollLengthYards} yd rolls): ${equivalentRolls} rolls</strong>`;
+}
+</script>
+
+<div class="note">
+  Note: This calculator is based on full-height strip yields. Pattern repeat rounds each strip up to the next repeat.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grasscloth Type Wallpaper Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      max-width: 800px;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.4rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 1.5rem;
+      margin-right: 0.75rem;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 1.5rem;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .print-header {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    @media print {
+      button {
+        display: none;
+      }
+
+      input {
+        border: none;
+        padding: 0;
+      }
+
+      body {
+        margin: 0.5in;
+        max-width: none;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Grasscloth Type Wallpaper Calculator</h1>
+
+<label for="projectName">Project Name:</label>
+<input type="text" id="projectName" placeholder="Enter project name" />
+
+<label for="roomName">Room Name:</label>
+<input type="text" id="roomName" placeholder="Enter room name" />
+
+<label for="wallWidth">Width of Wall (inches):</label>
+<input type="number" id="wallWidth" min="0" step="any" />
+
+<label for="wallHeight">Height of Wall (inches):</label>
+<input type="number" id="wallHeight" min="0" step="any" />
+
+<label for="patternRepeat">Pattern Repeat (inches):</label>
+<input type="number" id="patternRepeat" min="0" step="any" placeholder="Enter 0 if none" />
+
+<label for="numWalls">Number of Walls:</label>
+<input type="number" id="numWalls" min="1" value="1" />
+
+<label for="sheetWidth">Grasscloth Sheet Width (inches):</label>
+<input type="number" id="sheetWidth" min="0" step="any" />
+
+<label for="rollLengthYards">Bolt Length (yards): **3ft Per Yard** </label>
+<input type="number" id="rollLengthYards" min="0" step="any" />
+
+<button onclick="calculate()">Calculate</button>
+<button onclick="window.print()">Print</button>
+
+<div class="print-header" id="printHeader"></div>
+<div class="result" id="result"></div>
+
+<script>
+function calculate() {
+  const projectName = document.getElementById('projectName').value.trim();
+  const roomName = document.getElementById('roomName').value.trim();
+  const wallWidth = parseFloat(document.getElementById('wallWidth').value);
+  const wallHeight = parseFloat(document.getElementById('wallHeight').value);
+  const patternRepeat = parseFloat(document.getElementById('patternRepeat').value) || 0;
+  const numWalls = parseInt(document.getElementById('numWalls').value) || 1;
+  const sheetWidth = parseFloat(document.getElementById('sheetWidth').value);
+  const rollLengthYards = parseFloat(document.getElementById('rollLengthYards').value);
+
+  if (
+    isNaN(wallWidth) || wallWidth <= 0 ||
+    isNaN(wallHeight) || wallHeight <= 0 ||
+    isNaN(sheetWidth) || sheetWidth <= 0 ||
+    isNaN(rollLengthYards) || rollLengthYards <= 0 ||
+    numWalls < 1
+  ) {
+    document.getElementById('printHeader').innerHTML = "";
+    document.getElementById('result').innerHTML = "<span class='warning'>Please enter positive numbers for all fields.</span>";
+    return;
+  }
+
+  const rollLengthInches = rollLengthYards * 36;
+
+  let adjustedSheetHeight = wallHeight;
+  if (patternRepeat > 0) {
+    adjustedSheetHeight = Math.ceil(wallHeight / patternRepeat) * patternRepeat;
+  }
+
+  const sheetsPerWall = Math.ceil(wallWidth / sheetWidth) + 1;
+  const totalSheets = sheetsPerWall * numWalls;
+
+  const fullSheetsPerRoll = Math.floor(rollLengthInches / adjustedSheetHeight);
+
+  if (fullSheetsPerRoll < 1) {
+    document.getElementById('printHeader').innerHTML = "";
+    document.getElementById('result').innerHTML = "<span class='warning'>Wall height (with pattern repeat) is too tall to get even one full sheet from the roll.</span>";
+    return;
+  }
+
+  const totalRolls = Math.ceil(totalSheets / fullSheetsPerRoll);
+  const totalYards = totalRolls * rollLengthYards;
+
+  document.getElementById('printHeader').innerHTML =
+    `<strong>Project Name:</strong> ${projectName || 'N/A'}<br>` +
+    `<strong>Room Name:</strong> ${roomName || 'N/A'}`;
+
+  document.getElementById('result').innerHTML =
+    `Sheets Per Wall (including 1 extra): ${sheetsPerWall}<br>` +
+    `Total Sheets Needed: ${totalSheets}<br>` +
+    `Full-Height Sheets Per Roll: ${fullSheetsPerRoll}<br>` +
+    `Adjusted Sheet Height: ${adjustedSheetHeight.toFixed(2)} inches<br><br>` +
+    `<strong>Total Bolts Needed (rounded up): ${totalRolls} or ${totalYards} Yds</strong>`;
+}
+</script>
+
+<br>
+Note: This includes 1 extra sheet per wall for safety. Pattern repeat increases required height per sheet. All grasscloth must be purchased by the full bolt, unless the Vendor allows order incriments. Please read the info from the Vendor. 
+
+</body>
+</html>
