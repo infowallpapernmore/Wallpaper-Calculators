@@ -1,124 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallpaper N More Calculators</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{
-    box-sizing:border-box;
-}
+    <title>Wallpaper N More Calculators</title>
 
-body{
-    margin:0;
-    padding:30px 20px;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f4f4f4;
-    color:#222;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-.container{
-    max-width:900px;
-    margin:auto;
-}
+        body {
+            margin: 0;
+            padding: 30px 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f4f4;
+            color: #222;
+        }
 
-h1{
-    text-align:center;
-    margin-bottom:5px;
-}
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-h2{
-    text-align:center;
-    font-weight:normal;
-    color:#666;
-    margin-top:0;
-    margin-bottom:35px;
-}
+        h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            font-size: 36px;
+        }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:20px;
-}
+        h2 {
+            margin: 0 0 35px;
+            text-align: center;
+            font-size: 21px;
+            font-weight: normal;
+            color: #666;
+        }
 
-.button{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    min-height:90px;
-    padding:20px;
-    background:white;
-    color:#222;
-    text-decoration:none;
-    border-radius:10px;
-    border:2px solid #ccc;
-    font-size:20px;
-    font-weight:bold;
-    transition:.2s;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
 
-.button:hover{
-    background:#efefef;
-    border-color:#888;
-}
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 90px;
+            padding: 20px;
+            background: white;
+            color: #222;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        }
 
-.footer{
-    text-align:center;
-    margin-top:40px;
-    color:#777;
-}
-</style>
+        .button:hover,
+        .button:focus {
+            background: #ededed;
+            border-color: #888;
+        }
 
+        .footer {
+            margin-top: 38px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        @media (min-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <main class="container">
 
-<h1>Wallpaper N More</h1>
-<h2>Wallpaper Calculators</h2>
+        <h1>Wallpaper N More</h1>
+        <h2>Wallpaper Calculators</h2>
 
-<div class="grid">
+        <div class="grid">
 
-<a class="button"
-href="21 inch x 33' L with Sheet variables corrected.html">
-21 inch x 33' L<br>Sheet Variable
-</a>
+            <a class="button"
+               href="./21%20inch%20x%2033%27%20L%20with%20Sheet%20variables%20corrected.html">
+                21 inch x 33' L<br>
+                With Sheet Variables
+            </a>
 
-<a class="button"
-href="27 inch x 27' L with Sheet variables corrected.html">
-27 inch x 27' L<br>Sheet Variable
-</a>
+            <a class="button"
+               href="./27%20inch%20x%2027%27%20L%20with%20Sheet%20variables%20corrected.html">
+                27 inch x 27' L<br>
+                With Sheet Variables
+            </a>
 
-<a class="button"
-href="27 inch x 33' L with Sheet variables corrected.html">
-27 inch x 33' L<br>Sheet Variable
-</a>
+            <a class="button"
+               href="./27%20inch%20x%2033%27%20L%20with%20Sheet%20variables%20corrected.html">
+                27 inch x 33' L<br>
+                With Sheet Variables
+            </a>
 
-<a class="button"
-href="42 inch x 33' L with Sheet variables. Double Double Roll.html">
-42 inch x 33' L<br>Double Double Roll
-</a>
+            <a class="button"
+               href="./42%20inch%20x%2033%27%20L%20with%20Sheet%20variables.%20Double%20Double%20Roll.html">
+                42 inch x 33' L<br>
+                Double Double Roll
+            </a>
 
-<a class="button"
-href="Grasscloth type calculator with sheet size variable.html">
-Grasscloth Type Calculator
-</a>
+            <a class="button"
+               href="./Grasscloth%20type%20calculator%20with%20sheet%20size%20variable.html">
+                Grasscloth Type Calculator<br>
+                With Sheet Size Variable
+            </a>
 
-<a class="button"
-href="New Commercial Calculator with Roll Length Variable.html">
-New Commercial Calculator
-</a>
+            <a class="button"
+               href="./New%20Commercial%20Calculator%20with%20Roll%20Length%20Variable.html">
+                New Commercial Calculator<br>
+                With Roll Length Variable
+            </a>
 
-</div>
+        </div>
 
-<div class="footer">
-Wallpaper N More, LLC
-</div>
+        <div class="footer">
+            Wallpaper N More, LLC
+        </div>
 
-</div>
+    </main>
 
 </body>
 </html>
