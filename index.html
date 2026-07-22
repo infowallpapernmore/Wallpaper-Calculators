@@ -1,137 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallpaper N More Calculators</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallpaper N More Calculators</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+*{
+    box-sizing:border-box;
+}
 
-        body {
-            margin: 0;
-            padding: 30px 20px;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f4f4;
-            color: #222;
-        }
+body{
+    margin:0;
+    padding:30px 20px;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    color:#222;
+}
 
-        .container {
-            width: 100%;
-            max-width: 850px;
-            margin: 0 auto;
-        }
+.container{
+    max-width:900px;
+    margin:auto;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+h1{
+    text-align:center;
+    margin-bottom:5px;
+}
 
-        .header h1 {
-            margin-bottom: 8px;
-            font-size: 36px;
-        }
+h2{
+    text-align:center;
+    font-weight:normal;
+    color:#666;
+    margin-top:0;
+    margin-bottom:35px;
+}
 
-        .header p {
-            margin: 0;
-            font-size: 20px;
-            color: #555;
-        }
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
 
-        .calculator-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
+.button{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    min-height:90px;
+    padding:20px;
+    background:white;
+    color:#222;
+    text-decoration:none;
+    border-radius:10px;
+    border:2px solid #ccc;
+    font-size:20px;
+    font-weight:bold;
+    transition:.2s;
+}
 
-        .calculator-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 85px;
-            padding: 18px;
-            border-radius: 12px;
-            background: #ffffff;
-            color: #222222;
-            text-decoration: none;
-            text-align: center;
-            font-size: 21px;
-            font-weight: bold;
-            border: 2px solid #cccccc;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-        }
+.button:hover{
+    background:#efefef;
+    border-color:#888;
+}
 
-        .calculator-button:hover,
-        .calculator-button:focus {
-            background: #eeeeee;
-            border-color: #888888;
-        }
+.footer{
+    text-align:center;
+    margin-top:40px;
+    color:#777;
+}
+</style>
 
-        .footer {
-            margin-top: 35px;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-        }
-
-        @media (min-width: 700px) {
-            .calculator-list {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <main class="container">
 
-        <header class="header">
-            <h1>Wallpaper N More</h1>
-            <p>Wallpaper Calculators</p>
-        </header>
+<div class="container">
 
-        <section class="calculator-list">
+<h1>Wallpaper N More</h1>
+<h2>Wallpaper Calculators</h2>
 
-            <a class="calculator-button"
-               href="21 inch x 33'L w Sheet Variable.html">
-                21 inch x 33'L<br>w Sheet Variable
-            </a>
+<div class="grid">
 
-            <a class="calculator-button"
-               href="27 inch x 27'L w Sheet Variable.html">
-                27 inch x 27'L<br>w Sheet Variable
-            </a>
+<a class="button"
+href="21 inch x 33' L with Sheet variables corrected.html">
+21 inch x 33' L<br>Sheet Variable
+</a>
 
-            <a class="calculator-button"
-               href="27 inch x 33'L w Sheet Variable.html">
-                27 inch x 33'L<br>w Sheet Variable
-            </a>
+<a class="button"
+href="27 inch x 27' L with Sheet variables corrected.html">
+27 inch x 27' L<br>Sheet Variable
+</a>
 
-            <a class="calculator-button"
-               href="42 inch x 33'L w Sheet Variable (Double Double Roll).html">
-                42 inch x 33'L<br>w Sheet Variable<br>
-                (Double Double Roll)
-            </a>
+<a class="button"
+href="27 inch x 33' L with Sheet variables corrected.html">
+27 inch x 33' L<br>Sheet Variable
+</a>
 
-            <a class="calculator-button"
-               href="Grasscloth Type Yardage Calculator w Sheet Variable.html">
-                Grasscloth Type Yardage Calculator<br>
-                w Sheet Variable
-            </a>
+<a class="button"
+href="42 inch x 33' L with Sheet variables. Double Double Roll.html">
+42 inch x 33' L<br>Double Double Roll
+</a>
 
-            <a class="calculator-button"
-               href="New Commercial Width Calculator.html">
-                New Commercial Width Calculator
-            </a>
+<a class="button"
+href="Grasscloth type calculator with sheet size variable.html">
+Grasscloth Type Calculator
+</a>
 
-        </section>
+<a class="button"
+href="New Commercial Calculator with Roll Length Variable.html">
+New Commercial Calculator
+</a>
 
-        <footer class="footer">
-            Wallpaper N More, LLC
-        </footer>
+</div>
 
-    </main>
+<div class="footer">
+Wallpaper N More, LLC
+</div>
+
+</div>
+
 </body>
 </html>
